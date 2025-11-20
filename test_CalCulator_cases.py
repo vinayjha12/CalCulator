@@ -29,292 +29,458 @@ except ImportError:
     sys.modules["tkinter"] = tk
 
 import pytest
+import sys
 from unittest.mock import MagicMock, patch
+
+# Inject repository path for imports
+sys.path.insert(0, r'/home/vvdn/projects/sfit_unitest_19_9_2025/cloned_repos/CalCulator')
 
 # Mock tkinter and customtkinter
 class _WidgetMock:
     def __init__(self, *args, **kwargs):
-        pass
+        self.children = []
+
     def pack(self, *args, **kwargs):
         pass
-    def pack_propagate(self, *args, **kwargs):
+
+    def pack_propagate(self, value):
         pass
-    def configure(self, *args, **kwargs):
+
+    def configure(self, **kwargs):
         pass
+
     def delete(self, *args, **kwargs):
         pass
+
     def insert(self, *args, **kwargs):
         pass
+
     def get(self, *args, **kwargs):
         return ""
+
     def destroy(self):
         pass
+
     def winfo_children(self):
-        return []
+        return self.children
+
     def configure(self, **kwargs):
         pass
+
     def mark_set(self, *args, **kwargs):
         pass
+
     def get(self, *args, **kwargs):
         return ""
+
     def configure(self, **kwargs):
         pass
-    def destroy(self):
-        pass
-    def winfo_children(self):
-        return []
+
     def configure(self, **kwargs):
         pass
-    def mark_set(self, *args, **kwargs):
-        pass
-    def get(self, *args, **kwargs):
-        return ""
+
     def configure(self, **kwargs):
         pass
-    def destroy(self):
-        pass
-    def winfo_children(self):
-        return []
+
     def configure(self, **kwargs):
         pass
-    def mark_set(self, *args, **kwargs):
-        pass
-    def get(self, *args, **kwargs):
-        return ""
+
     def configure(self, **kwargs):
         pass
-    def destroy(self):
-        pass
-    def winfo_children(self):
-        return []
+
     def configure(self, **kwargs):
         pass
-    def mark_set(self, *args, **kwargs):
-        pass
-    def get(self, *args, **kwargs):
-        return ""
+
     def configure(self, **kwargs):
         pass
-    def destroy(self):
-        pass
-    def winfo_children(self):
-        return []
+
     def configure(self, **kwargs):
         pass
-    def mark_set(self, *args, **kwargs):
-        pass
-    def get(self, *args, **kwargs):
-        return ""
+
     def configure(self, **kwargs):
         pass
-    def destroy(self):
-        pass
-    def winfo_children(self):
-        return []
+
     def configure(self, **kwargs):
         pass
-    def mark_set(self, *args, **kwargs):
-        pass
-    def get(self, *args, **kwargs):
-        return ""
+
     def configure(self, **kwargs):
         pass
-    def destroy(self):
-        pass
-    def winfo_children(self):
-        return []
+
     def configure(self, **kwargs):
         pass
-    def mark_set(self, *args, **kwargs):
-        pass
-    def get(self, *args, **kwargs):
-        return ""
+
     def configure(self, **kwargs):
         pass
-    def destroy(self):
-        pass
-    def winfo_children(self):
-        return []
+
     def configure(self, **kwargs):
         pass
-    def mark_set(self, *args, **kwargs):
-        pass
-    def get(self, *args, **kwargs):
-        return ""
+
     def configure(self, **kwargs):
         pass
-    def destroy(self):
-        pass
-    def winfo_children(self):
-        return []
+
     def configure(self, **kwargs):
         pass
-    def mark_set(self, *args, **kwargs):
-        pass
-    def get(self, *args, **kwargs):
-        return ""
+
     def configure(self, **kwargs):
         pass
-    def destroy(self):
-        pass
-    def winfo_children(self):
-        return []
+
     def configure(self, **kwargs):
         pass
-    def mark_set(self, *args, **kwargs):
-        pass
-    def get(self, *args, **kwargs):
-        return ""
+
     def configure(self, **kwargs):
         pass
-    def destroy(self):
-        pass
-    def winfo_children(self):
-        return []
+
     def configure(self, **kwargs):
         pass
-    def mark_set(self, *args, **kwargs):
-        pass
-    def get(self, *args, **kwargs):
-        return ""
+
     def configure(self, **kwargs):
         pass
-    def destroy(self):
-        pass
-    def winfo_children(self):
-        return []
+
     def configure(self, **kwargs):
         pass
-    def mark_set(self, *args, **kwargs):
-        pass
-    def get(self, *args, **kwargs):
-        return ""
+
     def configure(self, **kwargs):
         pass
-    def destroy(self):
-        pass
-    def winfo_children(self):
-        return []
+
     def configure(self, **kwargs):
         pass
-    def mark_set(self, *args, **kwargs):
-        pass
-    def get(self, *args, **kwargs):
-        return ""
+
     def configure(self, **kwargs):
         pass
-    def destroy(self):
-        pass
-    def winfo_children(self):
-        return []
+
     def configure(self, **kwargs):
         pass
-    def mark_set(self, *args, **kwargs):
-        pass
-    def get(self, *args, **kwargs):
-        return ""
+
     def configure(self, **kwargs):
         pass
-    def destroy(self):
-        pass
-    def winfo_children(self):
-        return []
+
     def configure(self, **kwargs):
         pass
-    def mark_set(self, *args, **kwargs):
-        pass
-    def get(self, *args, **kwargs):
-        return ""
+
     def configure(self, **kwargs):
         pass
-    def destroy(self):
-        pass
-    def winfo_children(self):
-        return []
+
     def configure(self, **kwargs):
         pass
-    def mark_set(self, *args, **kwargs):
-        pass
-    def get(self, *args, **kwargs):
-        return ""
+
     def configure(self, **kwargs):
         pass
-    def destroy(self):
-        pass
-    def winfo_children(self):
-        return []
+
     def configure(self, **kwargs):
         pass
-    def mark_set(self, *args, **kwargs):
-        pass
-    def get(self, *args, **kwargs):
-        return ""
+
     def configure(self, **kwargs):
         pass
-    def destroy(self):
-        pass
-    def winfo_children(self):
-        return []
+
     def configure(self, **kwargs):
         pass
-    def mark_set(self, *args, **kwargs):
-        pass
-    def get(self, *args, **kwargs):
-        return ""
+
     def configure(self, **kwargs):
         pass
-    def destroy(self):
-        pass
-    def winfo_children(self):
-        return []
+
     def configure(self, **kwargs):
         pass
-    def mark_set(self, *args, **kwargs):
-        pass
-    def get(self, *args, **kwargs):
-        return ""
+
     def configure(self, **kwargs):
         pass
-    def destroy(self):
-        pass
-    def winfo_children(self):
-        return []
+
     def configure(self, **kwargs):
         pass
-    def mark_set(self, *args, **kwargs):
-        pass
-    def get(self, *args, **kwargs):
-        return ""
+
     def configure(self, **kwargs):
         pass
-    def destroy(self):
-        pass
-    def winfo_children(self):
-        return []
+
     def configure(self, **kwargs):
         pass
-    def mark_set(self, *args, **kwargs):
-        pass
-    def get(self, *args, **kwargs):
-        return ""
+
     def configure(self, **kwargs):
         pass
-    def destroy(self):
-        pass
-    def winfo_children(self):
-        return []
+
     def configure(self, **kwargs):
         pass
-    def mark_set(self, *args, **kwargs):
-        pass
-    def get(self, *args, **kwargs):
-        return ""
+
     def configure(self, **kwargs):
         pass
-    def destroy(self):
+
+    def configure(self, **kwargs):
         pass
-    def winfo_children(self):
-        return []
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
+    def configure(self, **kwargs):
+        pass
+
     def configure(self, **kwargs):
         pass
 import pytest
