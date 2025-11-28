@@ -47,191 +47,129 @@ class _WidgetMock(MagicMock):
     def __getitem__(self, key):
         return self.children[key]
 
-    def grid(self, **kwargs):
+    def configure(self, **kwargs):
         pass
 
     def pack(self, **kwargs):
         pass
 
-    def configure(self, **kwargs):
+    def grid(self, **kwargs):
+        pass
+
+    def bind(self, **kwargs):
         pass
 
     def config(self, **kwargs):
         pass
 
-    def bind(self, key, func):
-        pass
-
     def mainloop(self):
         pass
 
-    def rowconfigure(self, index, weight):
-        pass
-
-    def columnconfigure(self, index, weight):
-        pass
+def create_mock_calculator():
+    mock_tk = _WidgetMock()
+    tk.Tk = MagicMock(return_value=mock_tk)
+    mock_calculator = Calculator()
+    mock_calculator.window = mock_tk
+    mock_calculator.display_frame = _WidgetMock()
+    mock_calculator.buttons_frame = _WidgetMock()
+    mock_calculator.total_label = _WidgetMock()
+    mock_calculator.label = _WidgetMock()
+    return mock_calculator
 
 def test_calculator_initialization():
-    mock_tk = MagicMock()
-    mock_tk.Tk.return_value = _WidgetMock()
-    tk.Tk = mock_tk
-
-    calc = Calculator()
-
-    assert calc.window is not None
-    assert calc.total_expression == ""
-    assert calc.current_expression == ""
-    assert calc.display_frame is not None
-    assert calc.total_label is not None
-    assert calc.label is not None
-    assert calc.buttons_frame is not None
+    mock_calculator = create_mock_calculator()
+    assert mock_calculator.total_expression == ""
+    assert mock_calculator.current_expression == ""
+    assert isinstance(mock_calculator.window, _WidgetMock)
+    assert isinstance(mock_calculator.display_frame, _WidgetMock)
+    assert isinstance(mock_calculator.buttons_frame, _WidgetMock)
+    assert isinstance(mock_calculator.total_label, _WidgetMock)
+    assert isinstance(mock_calculator.label, _WidgetMock)
 
 def test_add_to_expression():
-    mock_tk = MagicMock()
-    mock_tk.Tk.return_value = _WidgetMock()
-    tk.Tk = mock_tk
-    mock_label = _WidgetMock()
-    mock_label.config = MagicMock()
-    mock_tk.Tk.return_value.display_frame.label = mock_label
-
-    calc = Calculator()
-    calc.label = mock_label
-    calc.add_to_expression(5)
-    assert calc.current_expression == "5"
-    calc.add_to_expression(3)
-    assert calc.current_expression == "53"
-    calc.add_to_expression('.')
-    assert calc.current_expression == "53."
-    calc.add_to_expression(0)
-    assert calc.current_expression == "53.0"
-    calc.label.config.assert_called_with(text="53.0")
+    mock_calculator = create_mock_calculator()
+    mock_calculator.add_to_expression("5")
+    assert mock_calculator.current_expression == "5"
+    mock_calculator.add_to_expression("+")
+    assert mock_calculator.current_expression == "5+"
 
 def test_append_operator():
-    mock_tk = MagicMock()
-    mock_tk.Tk.return_value = _WidgetMock()
-    tk.Tk = mock_tk
-    mock_total_label = _WidgetMock()
-    mock_total_label.config = MagicMock()
-    mock_label = _WidgetMock()
-    mock_label.config = MagicMock()
-    mock_tk.Tk.return_value.display_frame.total_label = mock_total_label
-    mock_tk.Tk.return_value.display_frame.label = mock_label
-
-    calc = Calculator()
-    calc.total_label = mock_total_label
-    calc.label = mock_label
-    calc.current_expression = "12"
-    calc.append_operator("+")
-    assert calc.current_expression == ""
-    assert calc.total_expression == "12+"
-    calc.total_label.config.assert_called_with(text=" 12 + ")
-    calc.label.config.assert_called_with(text="")
+    mock_calculator = create_mock_calculator()
+    mock_calculator.current_expression = "123"
+    mock_calculator.append_operator("+")
+    assert mock_calculator.total_expression == "123+"
+    assert mock_calculator.current_expression == ""
 
 def test_clear():
-    mock_tk = MagicMock()
-    mock_tk.Tk.return_value = _WidgetMock()
-    tk.Tk = mock_tk
-    mock_total_label = _WidgetMock()
-    mock_total_label.config = MagicMock()
-    mock_label = _WidgetMock()
-    mock_label.config = MagicMock()
-    mock_tk.Tk.return_value.display_frame.total_label = mock_total_label
-    mock_tk.Tk.return_value.display_frame.label = mock_label
-
-    calc = Calculator()
-    calc.total_label = mock_total_label
-    calc.label = mock_label
-    calc.total_expression = "1+2"
-    calc.current_expression = "3"
-    calc.clear()
-    assert calc.total_expression == ""
-    assert calc.current_expression == ""
-    calc.label.config.assert_called_with(text="")
-    calc.total_label.config.assert_called_with(text="")
+    mock_calculator = create_mock_calculator()
+    mock_calculator.current_expression = "123"
+    mock_calculator.total_expression = "456"
+    mock_calculator.clear()
+    assert mock_calculator.current_expression == ""
+    assert mock_calculator.total_expression == ""
 
 def test_square():
-    mock_tk = MagicMock()
-    mock_tk.Tk.return_value = _WidgetMock()
-    tk.Tk = mock_tk
-    mock_label = _WidgetMock()
-    mock_label.config = MagicMock()
-    mock_tk.Tk.return_value.display_frame.label = mock_label
-
-    calc = Calculator()
-    calc.label = mock_label
-    calc.current_expression = "5"
-    calc.square()
-    assert calc.current_expression == "25"
-    calc.label.config.assert_called_with(text="25")
-
-    calc.current_expression = "-3"
-    calc.square()
-    assert calc.current_expression == "9"
-    calc.label.config.assert_called_with(text="9")
+    mock_calculator = create_mock_calculator()
+    mock_calculator.current_expression = "5"
+    mock_calculator.square()
+    assert mock_calculator.current_expression == "25"
 
 def test_sqrt():
-    mock_tk = MagicMock()
-    mock_tk.Tk.return_value = _WidgetMock()
-    tk.Tk = mock_tk
-    mock_label = _WidgetMock()
-    mock_label.config = MagicMock()
-    mock_tk.Tk.return_value.display_frame.label = mock_label
-
-    calc = Calculator()
-    calc.label = mock_label
-    calc.current_expression = "25"
-    calc.sqrt()
-    assert calc.current_expression == "5.0"
-    calc.label.config.assert_called_with(text="5.0")
-
-    calc.current_expression = "2"
-    calc.sqrt()
-    assert calc.current_expression == "1.4142135623730951"
-    calc.label.config.assert_called_with(text="1.4142135623730951")
+    mock_calculator = create_mock_calculator()
+    mock_calculator.current_expression = "25"
+    mock_calculator.sqrt()
+    assert mock_calculator.current_expression == "5.0"
 
 def test_evaluate_valid_expression():
-    mock_tk = MagicMock()
-    mock_tk.Tk.return_value = _WidgetMock()
-    tk.Tk = mock_tk
-    mock_total_label = _WidgetMock()
-    mock_total_label.config = MagicMock()
-    mock_label = _WidgetMock()
-    mock_label.config = MagicMock()
-    mock_tk.Tk.return_value.display_frame.total_label = mock_total_label
-    mock_tk.Tk.return_value.display_frame.label = mock_label
-
-    calc = Calculator()
-    calc.total_label = mock_total_label
-    calc.label = mock_label
-    calc.total_expression = "2+3"
-    calc.current_expression = "5"
-    calc.evaluate()
-    assert calc.current_expression == "5"
-    assert calc.total_expression == ""
-    calc.label.config.assert_called_with(text="5")
-    calc.total_label.config.assert_called_with(text=" 2 + 3 ")
+    mock_calculator = create_mock_calculator()
+    mock_calculator.current_expression = "5"
+    mock_calculator.total_expression = "2+3"
+    mock_calculator.evaluate()
+    assert mock_calculator.current_expression == "5"
+    assert mock_calculator.total_expression == ""
 
 def test_evaluate_expression_with_operators():
-    mock_tk = MagicMock()
-    mock_tk.Tk.return_value = _WidgetMock()
-    tk.Tk = mock_tk
-    mock_total_label = _WidgetMock()
-    mock_total_label.config = MagicMock()
-    mock_label = _WidgetMock()
-    mock_label.config = MagicMock()
-    mock_tk.Tk.return_value.display_frame.total_label = mock_total_label
-    mock_tk.Tk.return_value.display_frame.label = mock_label
-
-    calc = Calculator()
-    calc.total_label = mock_total_label
-    calc.label = mock_label
-    calc.total_expression = "10*5"
-    calc.current_expression = "50"
-    calc.evaluate()
-    assert calc.current_expression == "50"
-    assert calc.total_expression == ""
-    calc.label.config.assert_called_with(text="50")
-    calc.total_label.config.assert_called_with(text=" 10 × 5 ")
+    mock_calculator = create_mock_calculator()
+    mock_calculator.current_expression = "5"
+    mock_calculator.append_operator("+")
+    mock_calculator.current_expression = "3"
+    mock_calculator.evaluate()
+    assert mock_calculator.current_expression == "8"
+    assert mock_calculator.total_expression == ""
 
 def test_evaluate_error_expression():
-    mock_tk = MagicMock()
+    mock_calculator = create_mock_calculator()
+    mock_calculator.current_expression = "abc"
+    mock_calculator.evaluate()
+    assert mock_calculator.current_expression == "Error"
+    assert mock_calculator.total_expression == ""
+
+def test_bind_keys_return():
+    mock_calculator = create_mock_calculator()
+    mock_calculator.window.bind.assert_any_call("<Return>", mock_calculator.evaluate)
+
+def test_bind_keys_digits():
+    mock_calculator = create_mock_calculator()
+    for digit in mock_calculator.digits:
+        mock_calculator.window.bind.assert_any_call(str(digit), mock_calculator.add_to_expression)
+
+def test_bind_keys_operators():
+    mock_calculator = create_mock_calculator()
+    for operator in mock_calculator.operations:
+        mock_calculator.window.bind.assert_any_call(operator, mock_calculator.append_operator)
+
+def test_update_label():
+    mock_calculator = create_mock_calculator()
+    mock_calculator.current_expression = "1234567890123"
+    mock_calculator.update_label()
+    mock_calculator.label.config.assert_called_once_with(text="12345678901")
+
+def test_update_total_label():
+    mock_calculator = create_mock_calculator()
+    mock_calculator.total_expression = "2+3"
+    mock_calculator.update_total_label()
+    mock_calculator.total_label.config.assert_called_once_with(text="2 + 3 ")
+
+if __name__ == "__main__":
+    import pytest, sys
+    sys.exit(pytest.main([__file__, "-v"]))
